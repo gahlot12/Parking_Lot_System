@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ParkingLot {
     private List<ParkingFloor> floors;
     private Map<String, ParkingTicket> parkedVehicles;
-    private Lock lock = new ReentrantLock(); // Lock for thread safety
+    private Lock lock = new ReentrantLock();
 
     public ParkingLot(int numFloors, int spotsPerFloor) {
         this.floors = new ArrayList<>();
@@ -18,7 +18,7 @@ public class ParkingLot {
     }
 
     public ParkingTicket parkVehicle(Vehicle vehicle) {
-        lock.lock(); // Acquire lock before modifying shared resources
+        lock.lock();
         try {
             for (ParkingFloor floor : floors) {
                 if (floor.getAvailableSpotsCount() > 0) {
@@ -39,12 +39,12 @@ public class ParkingLot {
             System.out.println("❌ Parking Full! No available spots.");
             return null;
         } finally {
-            lock.unlock(); // Always release lock
+            lock.unlock();
         }
     }
 
     public boolean removeVehicle(String licensePlate) {
-        lock.lock(); // Ensure only one thread modifies parking state at a time
+        lock.lock();
         try {
             ParkingTicket ticket = parkedVehicles.get(licensePlate);
             if (ticket != null) {
@@ -59,7 +59,7 @@ public class ParkingLot {
             System.out.println("❌ Vehicle not found!");
             return false;
         } finally {
-            lock.unlock(); // Release lock
+            lock.unlock();
         }
     }
 
@@ -79,5 +79,14 @@ public class ParkingLot {
         ParkingTicket ticket = parkedVehicles.get(licensePlate);
         System.out.println("✅ Vehicle " + licensePlate + " is parked at Floor " + ticket.getFloorNumber() + ", Spot "
                 + ticket.getSpotNumber());
+    }
+
+    public boolean isFull() {
+        for (ParkingFloor floor : floors) {
+            if (!floor.isFull()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

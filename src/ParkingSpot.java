@@ -8,7 +8,7 @@ public class ParkingSpot {
     private VehicleType spotType;
     private boolean isOccupied;
     private Vehicle currentVehicle;
-    private Lock spotLock = new ReentrantLock(); // Lock for thread safety
+    private Lock spotLock = new ReentrantLock();
 
     public ParkingSpot(int spotNumber, VehicleType spotType) {
         this.spotNumber = spotNumber;
@@ -20,7 +20,7 @@ public class ParkingSpot {
     public boolean parkVehicle(Vehicle vehicle) {
         spotLock.lock();
         try {
-            if (!isOccupied) { // Removed vehicle type check as it's handled in ParkingFloor
+            if (!isOccupied) {
                 this.currentVehicle = vehicle;
                 this.isOccupied = true;
                 return true;

@@ -6,7 +6,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Step 1: Create the Parking Lot
         System.out.print("Enter number of floors: ");
         int numFloors = scanner.nextInt();
         System.out.print("Enter spots per floor: ");
@@ -22,11 +21,12 @@ public class Main {
             System.out.println("2️⃣  Remove a Vehicle");
             System.out.println("3️⃣  Check Available Spots per Floor");
             System.out.println("4️⃣  Find Vehicle Location");
-            System.out.println("5️⃣  Exit");
+            System.out.println("5️⃣  Check if Parking Lot is Full");
+            System.out.println("6️⃣  Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1: // Park Vehicle
@@ -66,7 +66,15 @@ public class Main {
                     parkingLot.findVehicle(searchPlate);
                     break;
 
-                case 5: // Exit
+                case 5: // Check if Parking Lot is Full
+                    if (parkingLot.isFull()) {
+                        System.out.println("🚗🅿️ The parking lot is FULL!");
+                    } else {
+                        System.out.println("✅ Parking spaces are available.");
+                    }
+                    break;
+
+                case 6: // Exit
                     System.out.println("🚪 Exiting Parking Lot System. Goodbye!");
                     scanner.close();
                     return;
